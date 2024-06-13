@@ -28,53 +28,53 @@ class DashboardController extends Controller
     public function index()
     {
 
-       // dd("hello");
-        $pending = Order::where('status','=','pending')->get();
-        $processing = Order::where('status','=','processing')->get();
-        $completed = Order::where('status','=','completed')->get();
+        // dd("hello");
+        $pending = Order::where('status', '=', 'pending')->get();
+        $processing = Order::where('status', '=', 'processing')->get();
+        $completed = Order::where('status', '=', 'completed')->get();
         $days = "";
         $sales = "";
-        for($i = 0; $i < 30; $i++) {
-            $days .= "'".date("d M", strtotime('-'. $i .' days'))."',";
+        for ($i = 0; $i < 30; $i++) {
+            $days .= "'" . date("d M", strtotime('-' . $i . ' days')) . "',";
 
-            $sales .=  "'".Order::where('status','=','completed')->whereDate('created_at', '=', date("Y-m-d", strtotime('-'. $i .' days')))->count()."',";
+            $sales .=  "'" . Order::where('status', '=', 'completed')->whereDate('created_at', '=', date("Y-m-d", strtotime('-' . $i . ' days')))->count() . "',";
         }
         $users = User::all();
         $products = Product::all();
         $blogs = Blog::all();
-        $pproducts = Product::orderBy('id','desc')->take(5)->get();
-        $rorders = Order::orderBy('id','desc')->take(5)->get();
-        $poproducts = Product::orderBy('views','desc')->take(5)->get();
-        $rusers = User::orderBy('id','desc')->take(5)->get();
-        $referrals = Counter::where('type','referral')->orderBy('total_count','desc')->take(5)->get();
-        $browsers = Counter::where('type','browser')->orderBy('total_count','desc')->take(5)->get();
+        $pproducts = Product::orderBy('id', 'desc')->take(5)->get();
+        $rorders = Order::orderBy('id', 'desc')->take(5)->get();
+        $poproducts = Product::orderBy('views', 'desc')->take(5)->get();
+        $rusers = User::orderBy('id', 'desc')->take(5)->get();
+        $referrals = Counter::where('type', 'referral')->orderBy('total_count', 'desc')->take(5)->get();
+        $browsers = Counter::where('type', 'browser')->orderBy('total_count', 'desc')->take(5)->get();
 
-        $totalBonus =DB::table('transactions')
-        ->where('type','=','plus')
-        ->selectRaw(' ifnull(sum(amount),0) as total')
-     //->toSql();
-    //  ->getBindings();
-        ->first();
+        $totalBonus = DB::table('transactions')
+            ->where('type', '=', 'plus')
+            ->selectRaw(' ifnull(sum(amount),0) as total')
+            //->toSql();
+            //  ->getBindings();
+            ->first();
 
-      //  dd($totalBonus->TotalBonus);
-       $totalBonusWithDraw =DB::table('transactions')
-       ->where('type','=','minus')
-       ->selectRaw(' ifnull(sum(amount),0) as total')
-    //->toSql();
-   //  ->getBindings();
-       ->first();
+        //  dd($totalBonus->TotalBonus);
+        $totalBonusWithDraw = DB::table('transactions')
+            ->where('type', '=', 'minus')
+            ->selectRaw(' ifnull(sum(amount),0) as total')
+            //->toSql();
+            //  ->getBindings();
+            ->first();
 
-       $remainingBonus= $totalBonus->total-$totalBonusWithDraw->total;
+        $remainingBonus = $totalBonus->total - $totalBonusWithDraw->total;
 
-       
-      /*  $test = DB::select(DB::raw('select ( (SELECT ifnull(sum(`amount`),0) FROM `transactions` WHERE `type`="plus")
+
+        /*  $test = DB::select(DB::raw('select ( (SELECT ifnull(sum(`amount`),0) FROM `transactions` WHERE `type`="plus")
        -(SELECT ifnull(sum(`amount`),0) FROM `transactions` WHERE `type`="minus")) total'));
        dd($test[0]->total); */
 
 
 
-       $activation_notify = "";
-       /*  if (file_exists(public_path().'/rooted.txt')){
+        $activation_notify = "";
+        /*  if (file_exists(public_path().'/rooted.txt')){
             $rooted = file_get_contents(public_path().'/rooted.txt');
             if ($rooted < date('Y-m-d', strtotime("+10 days"))){
                 $activation_notify = "<i class='icofont-warning-alt icofont-4x'></i><br>Please activate your system.<br> If you do not activate your system now, it will be inactive on ".$rooted."!!<br><a href='".url('/admin/activation')."' class='btn btn-success'>Activate Now</a>";
@@ -82,13 +82,13 @@ class DashboardController extends Controller
         }
         */
 
-        return view('admin.dashboard',compact('pending','activation_notify','processing','completed','products','users','blogs','days','sales','pproducts','rorders','poproducts','rusers','referrals','browsers','totalBonus','totalBonusWithDraw','remainingBonus'));
+        return view('admin.dashboard', compact('pending', 'activation_notify', 'processing', 'completed', 'products', 'users', 'blogs', 'days', 'sales', 'pproducts', 'rorders', 'poproducts', 'rusers', 'referrals', 'browsers', 'totalBonus', 'totalBonusWithDraw', 'remainingBonus'));
     }
 
     public function profile()
     {
         $data = Auth::guard('admin')->user();
-        return view('admin.profile',compact('data'));
+        return view('admin.profile', compact('data'));
     }
 
     public function profileupdate(Request $request)
@@ -96,32 +96,30 @@ class DashboardController extends Controller
         //--- Validation Section
 
         $rules =
-        [
-            'photo' => 'mimes:jpeg,jpg,png,svg',
-            'email' => 'unique:admins,email,'.Auth::guard('admin')->user()->id
-        ];
+            [
+                'photo' => 'mimes:jpeg,jpg,png,svg',
+                'email' => 'unique:admins,email,' . Auth::guard('admin')->user()->id
+            ];
 
 
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
         $input = $request->all();
         $data = Auth::guard('admin')->user();
-            if ($file = $request->file('photo'))
-            {
-                $name = time().str_replace(' ', '', $file->getClientOriginalName());
-                $file->move('assets/images/admins/',$name);
-                if($data->photo != null)
-                {
-                    if (file_exists(public_path().'/assets/images/admins/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/admins/'.$data->photo);
-                    }
+        if ($file = $request->file('photo')) {
+            $name = time() . str_replace(' ', '', $file->getClientOriginalName());
+            $file->move('assets/images/admins/', $name);
+            if ($data->photo != null) {
+                if (file_exists(public_path() . '/assets/images/admins/' . $data->photo)) {
+                    unlink(public_path() . '/assets/images/admins/' . $data->photo);
                 }
-            $input['photo'] = $name;
             }
+            $input['photo'] = $name;
+        }
         $data->update($input);
         $msg = 'Successfully updated your profile';
         return response()->json($msg);
@@ -130,21 +128,21 @@ class DashboardController extends Controller
     public function passwordreset()
     {
         $data = Auth::guard('admin')->user();
-        return view('admin.password',compact('data'));
+        return view('admin.password', compact('data'));
     }
 
     public function changepass(Request $request)
     {
         $admin = Auth::guard('admin')->user();
-        if ($request->cpass){
-            if (Hash::check($request->cpass, $admin->password)){
-                if ($request->newpass == $request->renewpass){
+        if ($request->cpass) {
+            if (Hash::check($request->cpass, $admin->password)) {
+                if ($request->newpass == $request->renewpass) {
                     $input['password'] = Hash::make($request->newpass);
-                }else{
-                    return response()->json(array('errors' => [ 0 => 'Confirm password does not match.' ]));
+                } else {
+                    return response()->json(array('errors' => [0 => 'Confirm password does not match.']));
                 }
-            }else{
-                return response()->json(array('errors' => [ 0 => 'Current password Does not match.' ]));
+            } else {
+                return response()->json(array('errors' => [0 => 'Current password Does not match.']));
             }
         }
         $admin->update($input);
@@ -156,14 +154,13 @@ class DashboardController extends Controller
 
     public function generate_bkup()
     {
-      /*   $bkuplink = "";
+        /*   $bkuplink = "";
         $chk = file_get_contents('backup.txt');
         if ($chk != ""){
             $bkuplink = url($chk);
         }
-        return view('admin.movetoserver',compact('bkuplink','chk')); 
+        return view('admin.movetoserver',compact('bkuplink','chk'));
      */
-
     }
 
 
@@ -183,14 +180,14 @@ class DashboardController extends Controller
         fwrite($handle,"");
         fclose($handle);
         //return "No Backup File Generated.";
-        return redirect()->back()->with('success','Backup file Deleted Successfully!'); 
+        return redirect()->back()->with('success','Backup file Deleted Successfully!');
         */
     }
 
 
     public function activation()
     {
-      /*   $activation_data = "";
+        /*   $activation_data = "";
         if (file_exists(public_path().'/project/license.txt')){
             $license = file_get_contents(public_path().'/project/license.txt');
             if ($license != ""){
@@ -247,16 +244,18 @@ class DashboardController extends Controller
         //return config('services.das.ocean'); */
     }
 
-    function setUp($mtFile,$goFileData){
-     /*    $fpa = fopen(public_path().$mtFile, 'w');
+    function setUp($mtFile, $goFileData)
+    {
+        /*    $fpa = fopen(public_path().$mtFile, 'w');
         fwrite($fpa, $goFileData);
         fclose($fpa); */
     }
 
 
 
-    public function movescript(){
-       /*  ini_set('max_execution_time', 3000);
+    public function movescript()
+    {
+        /*  ini_set('max_execution_time', 3000);
 
         $destination  = public_path().'/install';
         $chk = file_get_contents('backup.txt');
@@ -283,13 +282,13 @@ class DashboardController extends Controller
         if (is_dir($destination)) {
             $this->deleteDir($destination);
         }
-        return response()->json(['status' => 'success','backupfile' => url($bkupname),'filename' => $bkupname],200); 
+        return response()->json(['status' => 'success','backupfile' => url($bkupname),'filename' => $bkupname],200);
         */
-
     }
 
-    public function recurse_copy($src,$dst) {
-       /*  $dir = opendir($src);
+    public function recurse_copy($src, $dst)
+    {
+        /*  $dir = opendir($src);
         @mkdir($dst);
         while(false !== ( $file = readdir($dir)) ) {
             if (( $file != '.' ) && ( $file != '..' )) {
@@ -301,12 +300,13 @@ class DashboardController extends Controller
                 }
             }
         }
-        closedir($dir); 
+        closedir($dir);
         */
     }
 
-    public function deleteDir($dirPath) {
-  /*       if (! is_dir($dirPath)) {
+    public function deleteDir($dirPath)
+    {
+        /*       if (! is_dir($dirPath)) {
             throw new InvalidArgumentException("$dirPath must be a directory");
         }
         if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
@@ -322,8 +322,4 @@ class DashboardController extends Controller
         }
         rmdir($dirPath); */
     }
-
 }// end of class
-
-
-
