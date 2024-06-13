@@ -1,0 +1,42 @@
+[13-Mar-2023 05:46:05 UTC] PHP Fatal error:  Uncaught ErrorException: file_get_contents(/home/starmobi/public_html/public/assets/languages/english.json): failed to open stream: No such file or directory in /home/starmobi/public_html/app/Providers/AppServiceProvider.php:59
+Stack trace:
+#0 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'file_get_conten...', '/home/starmobi/...', 59, Array)
+#1 /home/starmobi/public_html/app/Providers/AppServiceProvider.php(59): file_get_contents('/home/starmobi/...')
+#2 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/View/Concerns/ManagesEvents.php(162): App\Providers\AppServiceProvider->App\Providers\{closure}(Object(Illuminate\View\View))
+#3 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(378): Illuminate\View\Factory->Illuminate\View\Concerns\{closure}('composing: erro...', Array)
+#4 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(226): Illuminate\Events\Dispatcher->Illuminate\Event in /home/starmobi/public_html/app/Providers/AppServiceProvider.php on line 59
+[13-Mar-2023 05:50:13 UTC] PHP Fatal error:  Uncaught ErrorException: file_get_contents(/home/starmobi/public_html/public/assets/languages/english.json): failed to open stream: No such file or directory in /home/starmobi/public_html/app/Providers/AppServiceProvider.php:59
+Stack trace:
+#0 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'file_get_conten...', '/home/starmobi/...', 59, Array)
+#1 /home/starmobi/public_html/app/Providers/AppServiceProvider.php(59): file_get_contents('/home/starmobi/...')
+#2 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/View/Concerns/ManagesEvents.php(162): App\Providers\AppServiceProvider->App\Providers\{closure}(Object(Illuminate\View\View))
+#3 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(378): Illuminate\View\Factory->Illuminate\View\Concerns\{closure}('composing: erro...', Array)
+#4 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(226): Illuminate\Events\Dispatcher->Illuminate\Event in /home/starmobi/public_html/app/Providers/AppServiceProvider.php on line 59
+[13-Mar-2023 05:53:05 UTC] PHP Fatal error:  Uncaught ErrorException: file_get_contents(/home/starmobi/public_html/public/assets/languages/english.json): failed to open stream: No such file or directory in /home/starmobi/public_html/app/Providers/AppServiceProvider.php:59
+Stack trace:
+#0 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'file_get_conten...', '/home/starmobi/...', 59, Array)
+#1 /home/starmobi/public_html/app/Providers/AppServiceProvider.php(59): file_get_contents('/home/starmobi/...')
+#2 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/View/Concerns/ManagesEvents.php(162): App\Providers\AppServiceProvider->App\Providers\{closure}(Object(Illuminate\View\View))
+#3 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(378): Illuminate\View\Factory->Illuminate\View\Concerns\{closure}('composing: erro...', Array)
+#4 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(226): Illuminate\Events\Dispatcher->Illuminate\Event in /home/starmobi/public_html/app/Providers/AppServiceProvider.php on line 59
+[13-Mar-2023 05:53:07 UTC] PHP Fatal error:  Uncaught ErrorException: file_get_contents(/home/starmobi/public_html/public/assets/languages/english.json): failed to open stream: No such file or directory in /home/starmobi/public_html/app/Providers/AppServiceProvider.php:59
+Stack trace:
+#0 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'file_get_conten...', '/home/starmobi/...', 59, Array)
+#1 /home/starmobi/public_html/app/Providers/AppServiceProvider.php(59): file_get_contents('/home/starmobi/...')
+#2 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/View/Concerns/ManagesEvents.php(162): App\Providers\AppServiceProvider->App\Providers\{closure}(Object(Illuminate\View\View))
+#3 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(378): Illuminate\View\Factory->Illuminate\View\Concerns\{closure}('composing: erro...', Array)
+#4 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(226): Illuminate\Events\Dispatcher->Illuminate\Event in /home/starmobi/public_html/app/Providers/AppServiceProvider.php on line 59
+[13-Mar-2023 05:53:42 UTC] PHP Fatal error:  Uncaught ErrorException: file_get_contents(/home/starmobi/public_html/public/assets/languages/english.json): failed to open stream: No such file or directory in /home/starmobi/public_html/app/Providers/AppServiceProvider.php:59
+Stack trace:
+#0 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'file_get_conten...', '/home/starmobi/...', 59, Array)
+#1 /home/starmobi/public_html/app/Providers/AppServiceProvider.php(59): file_get_contents('/home/starmobi/...')
+#2 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/View/Concerns/ManagesEvents.php(162): App\Providers\AppServiceProvider->App\Providers\{closure}(Object(Illuminate\View\View))
+#3 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(378): Illuminate\View\Factory->Illuminate\View\Concerns\{closure}('composing: erro...', Array)
+#4 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(226): Illuminate\Events\Dispatcher->Illuminate\Event in /home/starmobi/public_html/app/Providers/AppServiceProvider.php on line 59
+[13-Mar-2023 05:53:43 UTC] PHP Fatal error:  Uncaught ErrorException: file_get_contents(/home/starmobi/public_html/public/assets/languages/english.json): failed to open stream: No such file or directory in /home/starmobi/public_html/app/Providers/AppServiceProvider.php:59
+Stack trace:
+#0 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'file_get_conten...', '/home/starmobi/...', 59, Array)
+#1 /home/starmobi/public_html/app/Providers/AppServiceProvider.php(59): file_get_contents('/home/starmobi/...')
+#2 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/View/Concerns/ManagesEvents.php(162): App\Providers\AppServiceProvider->App\Providers\{closure}(Object(Illuminate\View\View))
+#3 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(378): Illuminate\View\Factory->Illuminate\View\Concerns\{closure}('composing: erro...', Array)
+#4 /home/starmobi/public_html/vendor/laravel/framework/src/Illuminate/Events/Dispatcher.php(226): Illuminate\Events\Dispatcher->Illuminate\Event in /home/starmobi/public_html/app/Providers/AppServiceProvider.php on line 59
