@@ -297,7 +297,7 @@ class ProductController extends Controller
         $data = new Product;
         $sign = Currency::where('is_default','=',1)->first();
         $input = $request->all();
-       
+
 
         // Check File
         if ($file = $request->file('file')) {
@@ -474,7 +474,7 @@ class ProductController extends Controller
          // check if Arrival
          if(empty($request->arrival))
          {
-             
+
              $input['is_arrival'] = 0;
 
          }else{
@@ -564,13 +564,16 @@ class ProductController extends Controller
             $prod->slug = Str::slug($data->name,'-').'-'.strtolower($data->sku);
         }
 
+       //  dd("/home/starmobi/public_html"."/".$path);
+
         // Set Thumbnail
-        $img = Image::make(public_path().'/assets/images/products/'.$prod->photo)->resize(285, 285);
+        $img = Image::make("/home/starmobi/public_html"."/".$path)->resize(285, 285);
+
         $thumbnail = time().Str::random(8).'.jpg';
-        $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
+        $img->save('/home/starmobi/public_html'.'/assets/images/thumbnails/'.$thumbnail);
 
 
-        
+
         $prod->thumbnail  = $thumbnail;
         $prod->update();
 
@@ -710,16 +713,16 @@ class ProductController extends Controller
                 $input['slug'] = Str::slug($input['name'],'-').'-'.strtolower($input['sku']);
 
                 $image_url = $line[5];
-                
+
                   $ch = curl_init();
                   curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
                   curl_setopt ($ch, CURLOPT_URL, $image_url);
                   curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 20);
                   curl_setopt ($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
                   curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, true);
-                  curl_setopt($ch, CURLOPT_HEADER, true); 
+                  curl_setopt($ch, CURLOPT_HEADER, true);
                   curl_setopt($ch, CURLOPT_NOBODY, true);
-                
+
                   $content = curl_exec ($ch);
                   $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 
@@ -732,13 +735,13 @@ class ProductController extends Controller
                         $input['photo']  = $fphoto;
                         $thumb_url = $line[5];
                     }else{
-                        $fimg = Image::make(public_path().'/assets/images/noimage.png')->resize(800, 800); 
+                        $fimg = Image::make(public_path().'/assets/images/noimage.png')->resize(800, 800);
                         $fphoto = time().Str::random(8).'.jpg';
                         $fimg->save(public_path().'/assets/images/products/'.$fphoto);
                         $input['photo']  = $fphoto;
                         $thumb_url = public_path().'/assets/images/noimage.png';
                     }
-                
+
                 $timg = Image::make($thumb_url)->resize(285, 285);
                 $thumbnail = time().Str::random(8).'.jpg';
                 $timg->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
@@ -1002,15 +1005,15 @@ class ProductController extends Controller
                $input['referral_user_bonus'] = 0;
                $input['is_referral_bonus']=0;
            }else{
-  
+
               $input['is_referral_bonus'] = $request->referral_bonus_check;
            }
 
-           
+
          // check if Arrival
          if(empty($request->arrival))
          {
-             
+
              $input['is_arrival'] = 0;
 
          }else{

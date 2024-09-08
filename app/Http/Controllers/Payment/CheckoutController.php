@@ -43,14 +43,14 @@ class CheckoutController extends Controller
             return view('payment.load.payment',compact('payment','pay_id','gateway','curr'));
         }
     }
-    
+
     public function depositloadpayment(Request $request,$slug1,$slug2)
     {
 
         if($request->has('deposit_number')){
             $deposit_number = $request->deposit_number;
             $deposit = Deposit::where('deposit_number',$deposit_number)->firstOrFail();
-           
+
             $curr = Currency::where('name',$deposit->currency_code)->firstOrFail();
             $payment = $slug1;
             $pay_id = $slug2;
@@ -65,7 +65,7 @@ class CheckoutController extends Controller
 
     public function checkout(Request $request)
     {
-       
+
         if($request->has('order_number')){
              $package_data  = DB::table('packages')->where('user_id','=',0)->get();
              $shipping_data  = DB::table('shippings')->where('user_id','=',0)->get();
@@ -77,7 +77,7 @@ class CheckoutController extends Controller
 
         }
 
-    
+
     }
 
 
