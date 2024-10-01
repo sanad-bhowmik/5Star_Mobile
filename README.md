@@ -1,35 +1,33 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
-
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+    <a href="https://5star-mobile.com" target="_blank">
+        <img src="https://github.com/sanad-bhowmik/5Star_Mobile/blob/06320c8372ba06e90d4609d8beb18edfa2eb64e0/public/assets/images/mockuper.png" width="700" alt="5Star Mobile Logo">
+    </a>
 </p>
 
-## About Laravel
+## About 5Star_Mobile
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**5Star_Mobile** is a complete mobile e-commerce platform that allows users to buy the latest smartphones, accessories, and mobile gadgets online. It includes a robust **Admin Dashboard** where administrators can manage products, orders, customers, and more. The platform is designed with simplicity and scalability in mind, using the powerful [Laravel](https://laravel.com) framework to deliver a seamless user experience for both customers and administrators.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Key features include:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Mobile Catalog**: Easily browse and filter a wide range of smartphones and mobile accessories.
+- **Product Management**: Admins can add, edit, and remove products directly from the dashboard.
+- **Order Management**: Track and update customer orders efficiently.
+- **Customer Accounts**: Users can create accounts, view their order history, and manage their profiles.
+- **Payment Integration**: Integrated with secure payment gateways for seamless transactions.
+- **Inventory Tracking**: Real-time stock updates and notifications.
+- **Analytics Dashboard**: Admins can view sales, revenue, and customer trends.
+- **Promotions and Discounts**: Create and manage discount codes and offers.
 
-## Learning Laravel
+## Learning 5Star_Mobile
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5Star_Mobile is built on the Laravel framework, which means you can take advantage of the comprehensive [Laravel documentation](https://laravel.com/docs). Whether you’re a beginner or an experienced developer, Laravel provides extensive resources and tutorials to help you understand and contribute to the project.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+For additional video-based learning, you can check out [Laracasts](https://laracasts.com), which offers tutorials on Laravel, modern PHP, JavaScript, and other web development topics.
 
-## Laravel Sponsors
+## 5Star_Mobile Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+We would like to thank the following sponsors for supporting the development of 5Star_Mobile. If you are interested in becoming a sponsor, please visit our [Patreon page](https://patreon.com/5star_mobile).
 
 ### Premium Partners
 
@@ -46,17 +44,16 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+We welcome contributions to 5Star_Mobile! If you would like to contribute to the project, please follow our [contribution guide](https://laravel.com/docs/contributions) to ensure that your work is reviewed and included properly.
 
 ## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+We are committed to maintaining a welcoming and inclusive community. Please review and abide by our [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct) to ensure a positive environment for all members.
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within 5Star_Mobile, please contact us immediately by sending an email to [security@5star-mobile.com](mailto:security@5star-mobile.com). All reported security issues will be promptly addressed.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# 5Star_Mobile
+The 5Star_Mobile platform is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
