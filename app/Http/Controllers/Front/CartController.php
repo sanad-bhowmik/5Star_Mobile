@@ -436,135 +436,127 @@ class CartController extends Controller
 
 
     public function addtonumcart()
-    {
+{
+    // Log incoming request data
+    \Log::info('Incoming request data:', $_GET);
 
-        $id = $_GET['id'];
-        $qty = $_GET['qty'];
-        $size = str_replace(' ','-',$_GET['size']);
-        $color = $_GET['color'];
-        $size_qty = $_GET['size_qty'];
-        $size_price = (double)$_GET['size_price'];
-        $size_key = $_GET['size_key'];
-        $keys =  $_GET['keys'];
-        $keys = explode(",",$keys);
-        $values = $_GET['values'];
-        $values = explode(",",$values);
-        $prices = $_GET['prices'];
-        if(!empty($prices)){
-            $prices = explode(",",$prices);
-        }
+    $id = $_GET['id'];
+    $qty = $_GET['qty'];
+    $size = str_replace(' ', '-', $_GET['size']);
+    $color = $_GET['color'];
+    $size_qty = $_GET['size_qty'];
+    $size_price = (double)$_GET['size_price'];
+    $size_key = $_GET['size_key'];
+    $keys = explode(",", $_GET['keys']);
+    $values = explode(",", $_GET['values']);
+    $prices = $_GET['prices'];
 
-        $keys = $keys == "" ? '' :implode(',',$keys);
-
-        $values = $values == "" ? '' : implode(',',$values );
-        if (Session::has('currency')) {
-            $curr = Currency::find(Session::get('currency'));
-        }
-        else {
-            $curr = Currency::where('is_default','=',1)->first();
-        }
-
-
-        $size_price = ($size_price / $curr->value);
-        $prod = Product::where('id','=',$id)->first(['id','user_id','slug','name','photo','size','size_qty','size_price','color','price','stock','type','file','link','license','license_qty','measure','whole_sell_qty','whole_sell_discount','attributes','sku','is_referral_bonus','referral_bonus','referral_user_bonus']);
-
-
-
-        if (Session::has('language'))
-        {
-            $data = \DB::table('languages')->find(Session::get('language'));
-            $data_results = file_get_contents(public_path().'/assets/languages/'.$data->file);
-            $lang = json_decode($data_results);
-
-        }
-        else
-        {
-            $data = \DB::table('languages')->where('is_default','=',1)->first();
-            $data_results = file_get_contents(public_path().'/assets/languages/'.$data->file);
-            $lang = json_decode($data_results);
-
-        }
-
-        if($prod->user_id != 0){
-        $gs = Generalsetting::findOrFail(1);
-        $prc = $prod->price + $gs->fixed_commission + ($prod->price/100) * $gs->percentage_commission ;
-        $prod->price = round($prc,2);
-        }
-
-        if(!empty($prices)){
-            if(!empty($prices[0])){
-                foreach($prices as $data){
-                    $prod->price += ($data / $curr->value);
-                }
-            }
-        }
-
-
-        if(!empty($prod->license_qty))
-        {
-        $lcheck = 1;
-            foreach($prod->license_qty as $ttl => $dtl)
-            {
-                if($dtl < 1)
-                {
-                    $lcheck = 0;
-                }
-                else
-                {
-                    $lcheck = 1;
-                    break;
-                }
-            }
-                if($lcheck == 0)
-                {
-                    return redirect()->route('front.cart')->with('unsuccess',$lang->out_stock);
-                }
-        }
-        if(empty($size))
-        {
-            if(!empty($prod->size))
-            {
-            $size = trim($prod->size[0]);
-            }
-            $size = str_replace(' ','-',$size);
-        }
-
-        if(empty($color))
-        {
-            if(!empty($prod->color))
-            {
-            $color = $prod->color[0];
-
-            }
-        }
-        $color = str_replace('#','',$color);
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->addnum($prod, $prod->id, $qty, $size,$color,$size_qty,$size_price,$size_key,$keys,$values);
-        if($cart->items[$id.$size.$color.str_replace(str_split(' ,'),'',$values)]['dp'] == 1)
-        {
-            return redirect()->route('front.cart')->with('unsuccess',$lang->already_cart);
-        }
-        if($cart->items[$id.$size.$color.str_replace(str_split(' ,'),'',$values)]['stock'] < 0)
-        {
-            return redirect()->route('front.cart')->with('unsuccess',$lang->out_stock);
-        }
-        if($cart->items[$id.$size.$color.str_replace(str_split(' ,'),'',$values)]['size_qty'])
-        {
-            if($cart->items[$id.$size.$color.str_replace(str_split(' ,'),'',$values)]['qty'] > $cart->items[$id.$size.$color.str_replace(str_split(' ,'),'',$values)]['size_qty'])
-            {
-                return redirect()->route('front.cart')->with('unsuccess',$lang->out_stock);
-            }
-        }
-
-        $cart->totalPrice = 0;
-        foreach($cart->items as $data)
-        $cart->totalPrice += $data['price'];
-        Session::put('cart',$cart);
-
-        //dd($cart);
-        return redirect()->route('front.cart');
+    if (!empty($prices)) {
+        $prices = explode(",", $prices);
     }
+
+    $keys = $keys == "" ? '' : implode(',', $keys);
+    $values = $values == "" ? '' : implode(',', $values);
+
+    // Get currency
+    $curr = Session::has('currency') ? Currency::find(Session::get('currency')) : Currency::where('is_default', '=', 1)->first();
+
+    // Retrieve product
+    $prod = Product::find($id); // Using find instead of where for better clarity
+
+    // Log retrieved product info
+    \Log::info('Product Retrieved:', $prod ? $prod->toArray() : ['Product Not Found']);
+
+    if (!$prod) {
+        return redirect()->route('front.cart')->with('unsuccess', 'Product not found.');
+    }
+
+    // Language retrieval logic
+    if (Session::has('language')) {
+        $data = \DB::table('languages')->find(Session::get('language'));
+        $data_results = file_get_contents(public_path() . '/assets/languages/' . $data->file);
+        $lang = json_decode($data_results);
+    } else {
+        $data = \DB::table('languages')->where('is_default', '=', 1)->first();
+        $data_results = file_get_contents(public_path() . '/assets/languages/' . $data->file);
+        $lang = json_decode($data_results);
+    }
+
+    // Adjust product price if user_id is set
+    if ($prod->user_id != 0) {
+        $gs = Generalsetting::findOrFail(1);
+        $prc = $prod->price + $gs->fixed_commission + ($prod->price / 100) * $gs->percentage_commission;
+        $prod->price = round($prc, 2);
+    }
+
+    // Add additional prices if available
+    if (!empty($prices)) {
+        foreach ($prices as $data) {
+            $prod->price += ($data / $curr->value);
+        }
+    }
+
+    // License check (if applicable)
+    if (!empty($prod->license_qty)) {
+        $lcheck = 1;
+        foreach ($prod->license_qty as $ttl => $dtl) {
+            if ($dtl < 1) {
+                $lcheck = 0;
+                break;
+            }
+        }
+        if ($lcheck == 0) {
+            return redirect()->route('front.cart')->with('unsuccess', $lang->out_stock);
+        }
+    }
+
+    // Handle size and color defaults
+    if (empty($size)) {
+        $size = !empty($prod->size) ? trim($prod->size[0]) : '';
+        $size = str_replace(' ', '-', $size);
+    }
+
+    if (empty($color)) {
+        $color = !empty($prod->color) ? $prod->color[0] : '';
+    }
+    $color = str_replace('#', '', $color);
+
+    // Initialize cart
+    $oldCart = Session::has('cart') ? Session::get('cart') : null;
+    $cart = new Cart($oldCart);
+
+    // Add product to cart
+    $cart->addnum($prod, $prod->id, $qty, $size, $color, $size_qty, $size_price, $size_key, $keys, $values);
+
+    // Check for existing product in cart
+    if (isset($cart->items[$id . $size . $color . str_replace(str_split(' ,'), '', $values)]['dp']) && $cart->items[$id . $size . $color . str_replace(str_split(' ,'), '', $values)]['dp'] == 1) {
+        return redirect()->route('front.cart')->with('unsuccess', $lang->already_cart);
+    }
+
+    // Check stock availability
+    if (isset($cart->items[$id . $size . $color . str_replace(str_split(' ,'), '', $values)]['stock']) && $cart->items[$id . $size . $color . str_replace(str_split(' ,'), '', $values)]['stock'] < 0) {
+        return redirect()->route('front.cart')->with('unsuccess', $lang->out_stock);
+    }
+
+    // Check size quantity limits
+    if (isset($cart->items[$id . $size . $color . str_replace(str_split(' ,'), '', $values)]['size_qty'])) {
+        if ($cart->items[$id . $size . $color . str_replace(str_split(' ,'), '', $values)]['qty'] > $cart->items[$id . $size . $color . str_replace(str_split(' ,'), '', $values)]['size_qty']) {
+            return redirect()->route('front.cart')->with('unsuccess', $lang->out_stock);
+        }
+    }
+
+    // Update total price
+    $cart->totalPrice = 0;
+    foreach ($cart->items as $data) {
+        $cart->totalPrice += $data['price'];
+    }
+
+    // Store updated cart in session
+    Session::put('cart', $cart);
+
+    return redirect()->route('front.cart');
+}
+
 
     public function addbyone(Request $request)
     {

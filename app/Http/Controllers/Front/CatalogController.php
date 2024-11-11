@@ -47,7 +47,7 @@ class CatalogController extends Controller
 
     public function category(Request $request, $slug=null, $slug1=null, $slug2=null)
     {
-      if (Session::has('currency')) 
+      if (Session::has('currency'))
       {
         $curr = Currency::find(Session::get('currency'));
       }
@@ -252,7 +252,7 @@ class CatalogController extends Controller
 
         if($productt->user_id != 0)
         {
-          
+
             $vendors = Product::where('status','=',1)->where('user_id','=',$productt->user_id)->take(8)->get();
         }
         else
@@ -272,7 +272,7 @@ class CatalogController extends Controller
          $image = imagecreatetruecolor(200, 50);
          $background_color = imagecolorallocate($image, 255, 255, 255);
          imagefilledrectangle($image,0,0,200,50,$background_color);
- 
+
          $pixel = imagecolorallocate($image, 0,0,255);
          for($i=0;$i<500;$i++)
          {
@@ -466,7 +466,7 @@ class CatalogController extends Controller
           ->orWhere('meta_tag', 'LIKE', '%' .$input. '%')
           ->orWhere('meta_description', 'LIKE', '%' .$input. '%')
           ->get();
-          
+
           return json_encode($data);
 
 

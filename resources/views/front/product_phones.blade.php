@@ -19,6 +19,7 @@
           </li>
           @endif
           <li><a href="{{ route('front.product', $productt->slug) }}">{{ $productt->name }}</a>
+        <!--<li><a href="{{ route('front.product', ['slug' => $productt->slug]) }}">{{ $productt->name }}</a></li>-->
 
         </ul>
       </div>
@@ -278,31 +279,79 @@
                     @endif
 
                     @if($productt->product_type == "affiliate")
+    <li class="addtocart">
+        <a href="{{ route('affiliate.product', $productt->slug) }}" target="_blank"><i class="icofont-cart"></i> {{ $langg->lang251 }}</a>
+    </li>
+@else
+    @if($productt->emptyStock())
+        <li class="addtocart">
+            <a href="javascript:;" class="cart-out-of-stock">
+                <i class="icofont-close-circled"></i>
+                {{ $langg->lang78 }}</a>
+        </li>
+    @else
+        <li class="addtocart">
+            <a href="javascript:;" class="add-to-cart"><i class="icofont-cart"></i>{{ $langg->lang90 }}</a>
+        </li>
 
-                    <li class="addtocart">
-                      <a href="{{ route('affiliate.product', $productt->slug) }}" target="_blank"><i class="icofont-cart"></i> {{ $langg->lang251 }}</a>
-                    </li>
-                    @else
-                    @if($productt->emptyStock())
-                    <li class="addtocart">
-                      <a href="javascript:;" class="cart-out-of-stock">
-                        <i class="icofont-close-circled"></i>
-                        {{ $langg->lang78 }}</a>
-                    </li>
-                    @else
-                    <li class="addtocart">
-                      <a href="javascript:;" id="addcrt"><i class="icofont-cart"></i>{{ $langg->lang90 }}</a>
-                    </li>
-                    @if($gs->is_buy_now == 1)
+        @if($gs->is_buy_now == 1)
+            <li class="addtocart">
+                <a class="buy-now" href="javascript:;">
+                    <i class="icofont-cart"></i>{{ $langg->lang251 }}
+                </a>
+            </li>
+        @endif
+    @endif
+@endif
+
+<!-- Modal Structure -->
+<div id="buyNowModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>{{ $langg->lang251 }}</h2>
+        @if($gs->is_buy_now == 1)
                     <li class="addtocart">
                       <a id="qaddcrt" href="javascript:;">
                         <i class="icofont-cart"></i>{{ $langg->lang251 }}
                       </a>
                     </li>
                     @endif
-                    @endif
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const buyNowButtons = document.querySelectorAll('.buy-now');
+    const modal = document.getElementById('buyNowModal');
+    const closeButton = document.querySelector('.close-button');
 
-                    @endif
+    // Open modal when "Buy Now" button is clicked
+    buyNowButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            modal.style.display = 'block'; // Show the modal
+        });
+    });
+
+    // Close modal when close button is clicked
+    closeButton.addEventListener('click', function() {
+        modal.style.display = 'none'; // Hide the modal
+    });
+
+    // Close modal when clicking outside of the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none'; // Hide the modal
+        }
+    });
+
+    // Optional: Confirm purchase action
+    document.getElementById('confirmPurchase').addEventListener('click', function() {
+        // Add your purchase logic here (e.g., send an AJAX request)
+        alert("Purchase confirmed!"); // Example action
+        modal.style.display = 'none'; // Hide the modal after confirmation
+    });
+});
+
+</script>
 
                     @if(Auth::guard('web')->check())
                     <li class="favorite">
@@ -379,7 +428,7 @@
               </div>
             </div>
           </div>
-<!-- 
+<!--
           <div class="col-lg-2">
             <div class="categori ">
               <div class="section-top">
@@ -408,7 +457,7 @@
         </div> end row  -->
 
 
-       
+
 
 
 
@@ -416,7 +465,7 @@
 
       <hr style="width: 100%; height:2px;">
       <div class="row">
-        <!-- <div class="col-lg-12">
+        <div class="col-lg-12">
           <div id="product-details-tab">
             <div class="top-menu-area">
               <ul class="tab-menu">
@@ -561,7 +610,7 @@
           </div>
         </div>
       </div>
- -->
+
 
 
 
@@ -585,7 +634,7 @@
 
 
 					<div class="row">
-					
+
 							<div class="col-lg-12 remove-padding">
 								<div class="img">
 									<a class="banner-effect" href="#">
@@ -593,11 +642,11 @@
 									</a>
 								</div>
 							</div>
-						
+
 					</div>
-			
-			
-		
+
+
+
 
 
 
@@ -608,7 +657,6 @@
 </section>
 
 
-<!--
   <div class="trending">
     <div class="container-my">
       <div class="row">
@@ -633,7 +681,7 @@
       </div>
     </div>
   </div>
-   Tranding Item Area End -->
+   <!--Tranding Item Area End -->
 </section>
 <!-- Product Details Area End -->
 
