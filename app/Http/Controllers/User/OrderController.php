@@ -45,8 +45,8 @@ class OrderController extends Controller
         $user = Auth::guard('web')->user();
         $order = Order::findOrfail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        
-        
+
+
         return view('user.order.details',compact('user','order','cart'));
     }
 
@@ -78,7 +78,7 @@ class OrderController extends Controller
         $order->txnid = $trans;
         $order->update();
         $data = $order->txnid;
-        return response()->json($data);            
-    }  
+        return response()->json($data);
+    }
 
 }
